@@ -1,15 +1,18 @@
 ---
+###CHECKING THE DIRECTORY EXISTS OR NOT AND CREATING THE DIRECTORY IF IT IS NOT EXISTING
 - name: checking "{{ dir }}" exists or not
   file:
     path: "{{ dir }}"
     state: directory
 
+###FINDING THE OLDER LOGS AND REGISTERING IT TO "list"
 - name: Finding the older logs
   find:
     paths: "{{ dir }}"
     age: 90d
   register: list
 
+###REMOVING THE OLDER LOGS REGISTERED INTO "list"
 - name: removing the 90 days older files
   file:
     path: "{{ item.path }}"
@@ -17,11 +20,13 @@
   with_items:
     - "{{ list.files }}"
 
+###REGISTERING THE STATUS OF THE LOG FILE TO "file_path"
 - name: checking the log file exists or not
   stat:
     path: "{{ dir }}/esp_deploy_{{ dt }}_{{ tm }}.log"
   register: file_path
 
+###CREATING THE LOG FILE IF IT IS NOT EXISTING
 - name: creating the log file
   file:
     path: "{{ dir }}/esp_deploy_{{ dt }}_{{ tm }}.log"
@@ -29,4 +34,5 @@
     force: no
   when: file_path.stat.exists != true
 
+###INCLUDING THE PLAYBOOK FOR WRITING LOGS
 - include: ./writing_log.yaml

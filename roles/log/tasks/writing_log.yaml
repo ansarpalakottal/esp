@@ -1,16 +1,20 @@
 ---
-- name: restarting tomcat
+###STOPPING TOMCAT AND REGISTERING THE STATUS TO "output"
+- name: stopping tomcat
   service:
     name: tomcat
     state: stopped
   register: output
 
+###INCLUDING THE COMMON FILE TO WRITE THE LOGS INTO LOG FILE
 - include: ./lineinfile.yaml
 
+###STARTING TOMCAT AND REGISTERING THE STATUS TO "output"
 - name: starting the tomcat
   service:
     name: tomcat
     state: started
   register: output
 
+###INCLUDING THE COMMON FILE TO WRITE THE LOGS INTO LOG FILE
 - include: ./lineinfile.yaml

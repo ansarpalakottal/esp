@@ -1,5 +1,6 @@
 ---
-- name: writing stop log to log file
+###WRITING LOG TO THE LOG FILE
+- name: writing restart log to the log file
   lineinfile:
     line: "LOG FOR RESTARTING TOMCAT ::::::::::::
                 {{ output.state }}"
