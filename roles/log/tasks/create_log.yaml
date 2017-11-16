@@ -1,0 +1,32 @@
+---
+- hosts: all
+  
+  become: true
+
+  vars:
+    dir: /usr/local/mow/infra
+    
+  tasks:
+  - name: checking directory exists or not
+    file:
+      path: '{{ dir }}'
+      state: directory
+
+  - name: finding the older files
+    find:
+      paths: '{{ dir }}'
+      age: 2d
+    register: list
+
+  - name: removing the files older than 90 days
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items:
+      - "{{ list.files }}"
+
+  - name: creating the log files
+    file:
+      path: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}.log"
+      state: touch
+      force: no
