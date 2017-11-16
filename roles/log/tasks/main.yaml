@@ -19,12 +19,12 @@
 
 - name: checking the log file exists or not
   stat:
-    path: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}.log"
+    path: "{{ dir }}/esp_deploy_{{ dt }}_{{ tm }}.log"
   register: file_path
 
 - name: creating the log file
   file:
-    path: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}.log"
+    path: "{{ dir }}/esp_deploy_{{ dt }}_{{ tm }}.log"
     state: touch
     force: no
   when: file_path.stat.exists != true

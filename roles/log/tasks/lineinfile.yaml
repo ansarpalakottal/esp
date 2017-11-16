@@ -1,8 +1,8 @@
 ---
 - name: writing stop log to log file
   lineinfile:
-    line: "LOG FOR STOPPING TOMCAT ::::::::::::
-                {{ output | to_nice_json }}"
+    line: "LOG FOR RESTARTING TOMCAT ::::::::::::
+                {{ output.state }}"
 
-    dest: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}.log"
+    dest: "{{ dir }}/esp_deploy_{{ dt }}_{{ tm }}.log"
     insertafter: EOF
