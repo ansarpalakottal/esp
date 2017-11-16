@@ -1,0 +1,27 @@
+### PLAYBOOK FOR CREATING THE DIRECTORY AND REMOVING THE OLD LOGS
+---
+- hosts: all
+
+  vars:
+    dir: /usr/local/mow/infra
+
+  tasks:
+  - name: checking directory exists or not
+    file:
+      path: {{ dir }}
+      state: directory
+
+  - name: finding the older files
+    find:
+      paths: {{ dir }}
+      age: 2d
+      age_stamp: mtime
+      #recurse: yes
+    register: list
+
+  - name: removing the files older than 90 days
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items:
+      - "{{ list.files }}"

@@ -1,0 +1,16 @@
+---
+- name: restarting tomcat
+  service:
+    name: tomcat
+    state: stopped
+  register: output
+
+- include: ./lineinfile.yaml
+
+- name: starting the tomcat
+  service:
+    name: tomcat
+    state: started
+  register: output
+
+- include: ./lineinfile.yaml
