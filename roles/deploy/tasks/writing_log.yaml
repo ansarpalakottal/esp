@@ -1,0 +1,33 @@
+---
+- hosts: all
+  become: true
+
+  vars:
+    dir: /usr/local/mow/infra
+    #output: []
+
+  tasks:
+  - name: restarting tomcat
+    service:
+      name: tomcat
+      state: stopped
+    register: output
+
+  - name: writing stop log to log file
+    copy:
+      content: "LOG FOR STOPPING TOMCAT ::::::::::::
+                {{ output | to_nice_json }}"
+
+      dest: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}.log"
+
+  - name: starting the tomcat
+    service:
+      name: tomcat
+      state: started
+    register: output
+
+  - name: writing start log to log file
+    lineinfile:
+      line: "LOG FOR STARTING TOMCAT ::::::::::::{{ output | to_nice_json }}"
+      dest: "{{ dir }}/esp_deploy_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}.log"
+      insertafter: EOF
