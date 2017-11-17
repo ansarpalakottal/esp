@@ -1,0 +1,8 @@
+---
+env: dev
+###THE VARIABLE, versions IS TAKING FROM THE FUNCTION "version"
+version_versions: /usr/locla/web/sites/helium-dev/docs/versions
+###THE VARIABLE, docs IS TAKING FROM THE FUNCTION "version"
+version_docs: /usr/locla/web/sites/helium-dev/docs/
+###THE VARIABLE client IS PASSED AS EXTRA VARIABLE
+extra_var_client: ccms

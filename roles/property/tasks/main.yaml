@@ -1,0 +1,21 @@
+---
+- name: changing to the client directory
+  shell: cd "{{ version_docs }}/{{ extra_var_client }}"
+
+- name: checking the status of the properties file- "{{ version_docs }}/{{ extra_var_client }}/resources/helium.properties"
+  stat:
+    path: "{{ version_docs }}/{{ extra_var_client }}/resources/helium.properties"
+  register: stat_properties
+
+- name: taking backups of the "{{ version_docs }}/{{ extra_var_client }}/resources/helium.properties" file
+  copy:
+    src: {{ version_docs }}/{{ extra_var_client }}/resources/helium.properties
+    dest: {{ version_docs }}/{{ extra_var_client }}/resources/helium.properties_{{ dt }}
+  when: stat_properties.stat.exists == true
+
+- debug:
+    msg: The file not exists
+  when: stat_properties.stat.exists != true
+
+
+
