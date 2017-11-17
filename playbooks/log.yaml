@@ -3,5 +3,6 @@
   become: true
   #gather_facts: no
   roles:
-    - log
+    #- log
+    - property
 
