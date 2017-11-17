@@ -7,4 +7,4 @@ version_docs: /usr/local/web/sites/helium-dev/docs
 ###THE VARIABLE client IS PASSED AS EXTRA VARIABLE
 extra_var_client: ccms
 ###STORING CURRENT DATE TO THE VARIABLE
-dt: ansible_date_time.date
+dt: '{{ ansible_date_time.date }}'
